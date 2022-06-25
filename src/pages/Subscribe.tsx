@@ -1,6 +1,22 @@
+import { gql } from "@apollo/client";
+import { useState, FormEvent } from "react";
 import { Logo } from "../components/Logo";
 
+
+const CREATE_SUBSCRIBER_MUTATION = gql`
+mutation CreateSubscriber ($name: String!, $email: String!) {
+  creteSubscriber(data: {name: $name, email: $email})
+}
+`
+
 export function Subscribe() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+
+  function handleSubscribe(event: FormEvent) {
+    console.log(name, email)
+  } 
+  
   return (
     <div className="min-h-screen bg-blur bg-cover bg-no-reapeat flex flex-col items-center">
 
@@ -16,12 +32,12 @@ export function Subscribe() {
 
         <div className="p-8 bg-gray-700 border border-gray-500 rounded">
           <strong className="text-2xl mb-6 block">Inscreva-se gratuitamente</strong>
-           <form action="" className="flex flex-col gap-2 w-full">
-            <input className="bg-gray-900 rounded px-5 h-14" type='text' placeholder="Seu nome completo"/>
-            <input className="bg-gray-900 rounded px-5 h-14" type='text' placeholder="Digite seu e-mail"/>
+          <form onSubmit={handleSubscribe} className="flex flex-col gap-2 w-full">
+            <input className="bg-gray-900 rounded px-5 h-14" type='text' placeholder="Seu nome completo" onChange={event => setName(event.target.value)} />
+            <input className="bg-gray-900 rounded px-5 h-14" type='text' placeholder="Digite seu e-mail" onChange={event => setEmail(event.target.value)} />
             <button type="submit" className="mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transiction colors">Garantir minha vaga</button>
-            
-           </form>
+
+          </form>
         </div>
       </div>
       <img src="/src/assets/code-mockup.png" className="mt-10" />
